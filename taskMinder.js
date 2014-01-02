@@ -1,6 +1,8 @@
-// init() - initialise the list
-function initialise(){	
+// init() - initialise the page and list
+function initialise(){
+	var width = window.innerWidth;
 	var height = window.innerHeight;
+	document.body.style.maxWidth = width + "px";
 	document.body.style.minHeight = height + "px";
 	
 	var addBtn = document.getElementById("addBtn");
@@ -48,10 +50,13 @@ function addNewRow(taskDictionary){
 	var elementArray = new Array;
 	
 	// create checkbox
-	var element1 = document.createElement("input");
-	element1.type = "checkbox";
+	var element1 = document.createElement("div");
+	/*element1.type = "checkbox";
+	element1.className = "css-checkbox"
+	element1.id = "check" + rowID;
 	element1.checked = taskDictionary["check"];
-    element1.setAttribute("onClick", "checkboxClicked()");
+    element1.setAttribute("onClick", "checkboxClicked()");*/
+	element1.innerHTML = "<input type='checkbox' id='check" + rowID + "' name='cc' onClick='checkboxClicked()' /><label for='check" + rowID + "'><span></span>&nbsp;</label>";
 	elementArray[0] = element1;
 	
 	// create textbox to display the task
@@ -110,7 +115,7 @@ function addNewRow(taskDictionary){
 	
 	// add the new row to the 'dataTable' div
 	table.appendChild(newList);
-	
+
 	checkboxClicked();
 	saveTaskList();
 }
@@ -124,11 +129,12 @@ function checkboxClicked(){
 	// loop through all rows of the table
     for(var i=0; i<rowCount; i++){
 		// assign each input element to a variable
-        var chkbox = rows[i].childNodes[1].childNodes[0].childNodes[0];
+        var chkbox = rows[i].childNodes[1].childNodes[0].childNodes[0].childNodes[0];
 		var txtbox = rows[i].childNodes[1].childNodes[1];
-		var viewBtn = rows[i].childNodes[2].childNodes[0]
+		var viewBtn = rows[i].childNodes[2].childNodes[0];
 		var deleteBtn = rows[i].childNodes[3].childNodes[0];
-
+		//alert(chkbox.type + txtbox.type + viewBtn.type + deleteBtn.type);
+		
 		// if the checkbox is checked, add the fade-out styling
 		if(null != chkbox && true == chkbox.checked){
 			if(null != txtbox){
